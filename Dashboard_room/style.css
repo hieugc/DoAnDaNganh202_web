@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.head{
+    padding: 10px 16px;
+    margin: 5px 20px;
+    border-bottom: 2px solid black;
+    display: flex;
+}
+.head span{
+    font-size: 30px;
+}
+.list{
+    margin: 0 20px;
+    overflow: scroll;
+    min-height: 700px;
+    max-height: 700px;
+}
+
+.nav{
+    display: flex;
+    justify-content:space-around;
+    margin: 5px 10px;
+}
+
+.nav_item{
+    width: 33.33%;
+    padding-top: 5px;
+    display: flex;
+    flex-flow: column;
+    font-size: 20px;
+    text-align: center;
+}
+.icon span.material-icons{
+    font-size: 30px;
+}
+.active{
+    border-top: 2px solid black;
+}
