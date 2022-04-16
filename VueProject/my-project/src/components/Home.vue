@@ -1,5 +1,26 @@
-<script setup>
+<script>
 
+import Modal from './ModalHomeTop.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      isModalVisible: false,
+    };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
+  }
+};
 </script>
 
 <template>
@@ -47,7 +68,22 @@
         </div>
 
       </div>
+			
+			<button
+				type="button"
+				class="btn"
+				@click="showModal"
+			>
+				Open Modal!
+			</button>
 
+			<Modal
+				v-show="isModalVisible"
+				@close="closeModal"
+			/>
+
+
+			
 
 
 
