@@ -1,13 +1,3 @@
-var nav = document.querySelectorAll(".nav_item");
-var nav_active = document.querySelectorAll(".active")[0];
-nav.forEach(element => {
-    element.addEventListener("click", function(){
-        element.classList.add("active");
-        nav_active.classList.remove("active");
-        nav_active = element;
-    })
-});
-
 function Draw(i_data, i_title, i_index, i_type, i_color){
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(function(){drawChart(i_data, i_title, i_index, i_type, i_color);});

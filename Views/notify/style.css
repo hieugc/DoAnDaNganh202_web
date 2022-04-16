@@ -12,6 +12,7 @@
 .list{
     margin: 0 20px;
     overflow: scroll;
+    overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
 }
@@ -52,28 +53,4 @@
 .notify_bot_item{
     display: flex;
     justify-content: flex-end;
-}
-
-.nav{
-    display: flex;
-    justify-content:space-around;
-    margin: 5px 10px;
-}
-
-.nav_item{
-    width: 33.33%;
-    padding-top: 5px;
-    display: flex;
-    flex-flow: column;
-    font-size: 20px;
-    text-align: center;
-}
-.icon span.material-icons{
-    font-size: 30px;
-}
-.nav_item.active{
-    border-top: 2px solid aqua;
-}
-.nav_item.active *{
-    color: aqua;
 }
