@@ -51,22 +51,25 @@
 <style>
   .modal-backdrop {
     position: fixed;
-    top: 0;
+    top: 0px;
     bottom: 0;
-    left: 0;
+    left: 0px;
     right: 0;
     background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
   }
 
   .modal {
+    position: relative;
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    top: 80px;
+    left: 50px;
   }
 
   .modal-header,
