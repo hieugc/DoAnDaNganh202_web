@@ -31,23 +31,86 @@ function Draw(i_data, i_title, i_index, i_type, i_color){
   }
 }
 
-
-var data_1 = [
-  ['18:00 09/12/2013',  28],
-  ['2014',  30],
-  ['2015',  29],
-  ['2016',  31]
-];
-var title_1 = "Nhiệt độ phòng";
-var color_1 = "#FF4646";//EC6666
-Draw(data_1, title_1, 'chart_div_2', "Nhiệt độ", color_1);
-
-var data_2 = [
-  ['18:00 09/12/2013',  28],
-  ['2014',  30],
-  ['2015',  29],
-  ['2016',  31]
-];
-var title_2 = "Nồng độ khí gas";
-var color_2 = "#147AD6"
-Draw(data_2, title_2, 'chart_div_3', "Nồng độ", color_2);
+function draw_gas(){
+  var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if(this.responseText != "null")
+        {
+          let demo = JSON.parse(this.responseText);
+          var arr = demo.split("},{");
+          var data_gas = [];
+          for(var i = arr.length - 1; i >= 0 ; i--){
+            data_gas.push([get_date(arr[i]), get_value(arr[i])]);
+          }
+          Draw(data_gas, "Nồng độ khí gas", "chart_div_2", "Nồng độ", "#147AD6");
+          //timer_gas = setInterval(auto_draw_gas, 5000);
+        }
+      }
+    };
+    xmlhttp.open("GET", "?url=dash_board/get_range_gas", true);
+    xmlhttp.send();
+}
+function draw_temp(){
+  var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if(this.responseText != "null"){
+          let demo = JSON.parse(this.responseText);
+          var arr = demo.split("},{");
+          var data_temp = [];
+          for(var i = arr.length - 1; i >= 0 ; i--){
+            data_temp.push([get_date(arr[i]), get_value(arr[i])]);
+          }
+          Draw(data_temp, "Nhiệt độ phòng", "chart_div_3", "Nhiệt độ", "#FF4646");
+          //timer_temp = setInterval(auto_draw_temp, 5000);
+        }
+      }
+    };
+    xmlhttp.open("GET", "?url=dash_board/get_range_temperature", true);
+    xmlhttp.send();
+}
+function get_value(string){
+  return Number(string.split(",")[1].split(":")[1].replace("\"","").replace("\"",""));
+}
+function get_date(string){
+  return String(string.split(",")[4].split("\":\"")[1].replace("Z\"", "").replace("T", " "));
+}
+function auto_draw_gas(){
+  var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if(this.responseText != "null")
+        {
+          let demo = JSON.parse(this.responseText);
+          console.log(demo);
+          data_gas.push([get_date(demo), get_value(demo)]);
+          Draw(data_gas, "Nồng độ khí gas", "chart_div_2", "Nồng độ", "#147AD6");
+        }
+      }
+    };
+    xmlhttp.open("GET", "?url=dash_board/get_gas", true);
+    xmlhttp.send();
+}
+function auto_draw_temp(){
+  var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if(this.responseText != "null"){
+          let demo = JSON.parse(this.responseText);
+          console.log(demo);
+          data_temp.push([get_date(demo), get_value(demo)]);
+          Draw(data_temp, "Nhiệt độ phòng", "chart_div_3", "Nhiệt độ", "#FF4646");}
+      }
+    };
+    xmlhttp.open("GET", "?url=dash_board/get_temperature", true);
+    xmlhttp.send();
+}
+//var data_gas = [];
+//var data_temp = [];
+var timer_gas;
+var timer_temp;
+draw_gas();
+draw_temp();
+timer_temp = setInterval(draw_gas, 5000);
+timer_gas = setInterval(draw_temp, 5000);

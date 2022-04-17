@@ -6,11 +6,13 @@ class room extends Controller{
         if(!isset($_SESSION["user_name"])){
             $this->view("login");
         }
-        //lấy led
-        //lấy fan
-        $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
-        $_SESSION["room_fan"] = $this->cus_array($this->model('user')->get_fan($_SESSION["room_active"]["id"]));
-        $this->view("room");
+        else{
+            //lấy led
+            //lấy fan
+            $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
+            $_SESSION["room_fan"] = $this->cus_array($this->model('user')->get_fan($_SESSION["room_active"]["id"]));
+            $this->view("room");
+        }
     }
     public function create_room($name, $img_url){
         //tạo mới phòng

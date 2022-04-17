@@ -1,5 +1,5 @@
 
-    <div class="nav">
+    
       <div class="nav_item">
         <div class="icon">
           <span class="material-icons">
@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <div class="nav_item active">
+      <div class="nav_item">
         <div class="icon">
           <span class="material-icons">
             meeting_room
@@ -32,6 +32,5 @@
             Thông báo
         </div>
       </div>
-    </div>
 
 <script src="./Views/nav/nav.js"></script>

@@ -18,6 +18,10 @@ class login extends Controller{
             $_SESSION["house"] = $this->cus_array($this->model('user')->get_house($_SESSION["user_name"]));//full nhà
             if(count($_SESSION["house"]) != 0){//có it nhat 1 nha
                 $_SESSION["house_active"] = $_SESSION["house"][0];//nhà đang xài
+                $_SESSION["room"] = $this->cus_array($this->model("user")->get_room($_SESSION["house_active"]["id"]));//lay full phong
+                if(count($_SESSION["room"]) != 0){
+                    $_SESSION["room_active"] = $_SESSION["room"][0];
+                }
             }
             $this->view("house");
         }
@@ -67,7 +71,7 @@ class login extends Controller{
                     else{
                         array_push($_SESSION["Allroom_led"], array(array()));
                         array_push($_SESSION["Allroom_fan"], array(array()));
-                        array_push($_SESSION["Allroom_gas"], array(array())));
+                        array_push($_SESSION["Allroom_gas"], array(array()));
                         array_push($_SESSION["Allroom_temperature"], array(array()));
                     }
                 }

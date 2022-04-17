@@ -6,14 +6,16 @@ class house extends Controller{
         if(!isset($_SESSION["user_name"])){
             $this->view("login");
         }
-        //lấy danh sách phòng
-        //phòng mặc định
-        $_SESSION["room"] = $this->cus_array($this->model("user")->get_room($_SESSION["house_active"]["id"]));//lay full phong
-        if(count($_SESSION["room"]) != 0){
-            $_SESSION["room_active"] = $_SESSION["room"][0];
+        else{
+            //lấy danh sách phòng
+            //phòng mặc định
+            $_SESSION["room"] = $this->cus_array($this->model("user")->get_room($_SESSION["house_active"]["id"]));//lay full phong
+            if(count($_SESSION["room"]) != 0){
+                $_SESSION["room_active"] = $_SESSION["room"][0];
+            }
+            //lấy danh sách method ở nhà chưa làm
+            $this->view("house");
         }
-        //lấy danh sách method ở nhà chưa làm
-        $this->view("house");
     }
     public function create_house($name, $img_url){
         //tạo mới nhà
@@ -111,38 +113,11 @@ class house extends Controller{
         for($i = 0; $i < count($_SESSION["room"]); $i++)
         {
             $led = $this->get_all_led_in_room($_SESSION["room"][$i]["id"]);
-            $fan = $this->get_all_fan_in_room($_SESSION["room"][$i]["id"]));
+            $fan = $this->get_all_fan_in_room($_SESSION["room"][$i]["id"]);
             var_dump($fan);
-            var_dump($led)
+            var_dump($led);
             if($fan == NULL && $led == NULL) continue;
         }
-    }
-    public function create_device_in_method($device, $value, $method){
-        //gọi hàm tạo
-
-    }
-    public function create_method($name, $data){
-        //dùng danh sach các phòng => lấy thiết bị trong nó
-        //
-    }
-    
-    public function delete_method($id){
-        //xóa danh sách device in method
-        //xóa method
-    }
-    public function update_name_method($id, $name){
-        //gọi hàm đổi tên
-    }
-    public function update_device_method($id, $name, $data){
-        //gọi delete
-        //gọi create :)
-        //trả lại id
-    }
-    public function execute_method($id){
-        //lấy danh sách feed
-        //gửi dữ liệu lên adafuit
-        //lấy dữ liệu về so sánh value trong method
-        //cập nhật dữ liệu vào thiết bị
     }
 }
 ?>

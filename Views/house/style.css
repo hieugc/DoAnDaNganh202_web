@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.head{
+    padding: 10px 0;
+    margin: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+}
+.head_left{
+    display: flex;
+}
+.head span{
+    font-size: 32px;
+}
+.head h1{
+    margin-left: 10px;
+}

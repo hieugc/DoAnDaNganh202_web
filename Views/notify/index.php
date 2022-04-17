@@ -147,7 +147,7 @@
           </span></div>
         </div>
       </div>
-     <?php require_once "./Views/nav/index.php"; ?>
+      <div class="nav" id="2"><?php require_once "./Views/nav/index.php"; ?></div>
     </div>
     <script src="./Views/notify/notify.js"></script>
   </body>

@@ -1,9 +1,10 @@
 <?php
     class adafruit{
         protected $ADAFRUIT_IO_USERNAME = "Hieupham2502";
-        protected $ADAFRUIT_IO_KEY = "aio_suUb86lRLOB631sTFzihGiwEVHrC";
+        protected $ADAFRUIT_IO_KEY = "aio_WgpM704sRFtiS7EBVN77EsjV3XJn";
         private function cus_curl($data, $type, $method){
             $curl = curl_init();
+            #echo 'https://io.adafruit.com/api/v2/' . $this->ADAFRUIT_IO_USERNAME . $type;
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => 'https://io.adafruit.com/api/v2/' . $this->ADAFRUIT_IO_USERNAME . $type,
@@ -20,6 +21,9 @@
             }
             $resp = curl_exec($curl);
             curl_close($curl);
+            if($method == "GET"){
+                return $resp;
+            }
         }
         private function makeString($array){
             $string = $array[0];
@@ -31,7 +35,8 @@
             return array(
                 $type => array(
                     $value => $string
-                )
+                ),
+                'visibility' => 'public'
             );
         }
         
@@ -39,7 +44,7 @@
             return array(
                 'block' => array(
                     'name' => $string,
-                    'visual_type' => ,
+                    'visual_type' => "1",//ch xong
                     'properties' => json_encode([
                         'onValue' => 0,
                         'offValue' => 1
@@ -67,14 +72,14 @@
             $this->cus_curl($this->makeData("value", $value, 'datum'), '/feeds/' . $this->makeString(array($user, $house, $room, $device)) .'/data/', 'POST');
         }
         public function create_block($user, $house, $room, $device){
-            $this->cus_curl($this->makeDataBlock($device, $this->makeString(array($user, $house, $room, $device)), '/dashboards?dashboard_key=' . $this->makeString(array($user, $house, $room), 'POST');
+            $this->cus_curl($this->makeDataBlock($device, $this->makeString(array($user, $house, $room, $device))), '/dashboards?dashboard_key=' . $this->makeString(array($user, $house, $room)), 'POST');
         }
         //
         public function get_last_data($user, $house, $room, $device){
-            $this->cus_curl('', '/feeds/' . $this->makeString(array($user, $house, $room, $device)) . '/data?limit=1', 'GET');
+            return $this->cus_curl('', '/feeds/' . $this->makeString(array($user, $house, $room, $device)) . '/data?limit=1', 'GET');
         }
         public function get_range_data($user, $house, $room, $device, $start, $end){
-            $this->cus_curl('', '/feeds/' . $this->makeString(array($user, $house, $room, $device)) . '/data?start_time=' . $start . '&end_time=' . $end, 'GET');
+            return $this->cus_curl('', '/feeds/' . $this->makeString(array($user, $house, $room, $device)) . '/data?start_time=' . $start . 'T00:00Z&end_time=' . $end . 'T00:00Z', 'GET');
         }
 
         public function delete_group($user){
@@ -86,8 +91,8 @@
         public function delete_feed($user, $house, $room, $device){
             $this->cus_curl('', '/feeds/' . $this->makeString(array($user, $house, $room, $device)), "DELETE");//
         } 
-        public function create_block($user, $house, $room, $device){
-            $this->cus_curl('', '/dashboards/' . $this->makeString(array($user, $house, $room) . '/blocks/' . , 'DELETE');//
+        public function delete_block($user, $house, $room, $device){
+            $this->cus_curl('', '/dashboards/' . $this->makeString(array($user, $house, $room)) . '/blocks/', 'DELETE');//
         }
         
         //có thể bỏ

@@ -6,7 +6,9 @@ class notify extends Controller{
         if(!isset($_SESSION["user_name"])){
             $this->view("login");
         }
-        $this->view("notify");
+        else{
+            $this->view("notify");
+        }
     }
 }
 ?>
