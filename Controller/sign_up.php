@@ -30,14 +30,14 @@ class sign_up extends Controller{
         $resp = curl_exec($curl);
         curl_close($curl);
     }*/
-    public function sign_up($uname, $pwd){
-        $model_name = mysqli_fetch_array($this->model('user')->check_exist_account($uname)) ;
+    public function Esign_up($name, $pwd){
+        $model_name = $this->cus_array($this->model('user')->check_exist_account($name));//bool
         if($model_name){
-            echo $model_name;
+            var_dump($model_name);
         }
         else{
-            $this->model('user')->create_account($uname, $pwd);
-            $this->model('adafruit')->create_group($uname);
+            $this->model('user')->create_account($name, $pwd);
+            $this->model('adafruit')->create_group($name);
             $this->login_view();
         }
     }

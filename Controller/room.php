@@ -6,51 +6,40 @@ class room extends Controller{
         if(!isset($_SESSION["user_name"])){
             $this->view("login");
         }
+        //lấy led
+        //lấy fan
+        $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
+        $_SESSION["room_fan"] = $this->cus_array($this->model('user')->get_fan($_SESSION["room_active"]["id"]));
         $this->view("room");
     }
-    /*public function create_dashboard($name){
-        $ADAFRUIT_IO_USERNAME = "Hieupham2502";
-        $ADAFRUIT_IO_KEY = "aio_vmAg27wiuVuco7Rj2qaRqxw9vX2Q";
-        $data = array(
-            "dashboard" => array(
-                "name" => "User-" . $_SESSION["user_name"] . '-' . $_SESSION["room_active"]["name"] . '-' . $name
-            )
-        );
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 0,
-            CURLOPT_URL => 'https://io.adafruit.com/api/v2/Hieupham2502/dashboards/',
-            CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Content-Length'.strlen(json_encode($data)),
-                'X-AIO-Key: aio_vmAg27wiuVuco7Rj2qaRqxw9vX2Q'
-            ),  
-            CURLOPT_POST => 1, 
-            CURLOPT_POSTFIELDS => json_encode($data)
-        ));
-        $resp = curl_exec($curl);
-        curl_close($curl);
-    }*/
     public function create_room($name, $img_url){
-        $model_name = mysqli_fetch_array($this->model('room')->create_room($name, $img_url, $_SESSION["house_active"]["id"]));
+        //tạo mới phòng
+        //lấy lại danh sách phòng
+        //nếu số phòng = 1 set mặc định
+        //tạo dashboard mới
+        //trả tín hiệu => AJAX
+        $model_name = $this->model('user')->create_room($name, $img_url, $_SESSION["house_active"]["id"]);//1
         if($model_name){
-            $_SESSION["room"] = mysqli_fetch_array($this->model('room')->get_room($_SESSION["house_active"]["id"]));
-            $this->model('adafruit')->create_dashboard($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $name);//
-            echo "ok";
+            $_SESSION["room"] = $this->cus_array($this->model('user')->get_room($_SESSION["house_active"]["id"]));//2
+            if(count($_SESSION["room"]) == 1){//3
+                $_SESSION["room_active"] = $_SESSION["room"][0];
+            }
+            $this->model('adafruit')->create_dashboard( $_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . end($_SESSION["room"])["id"]);//4
+            echo "ok";//5
         }
         else{
             echo $model_name;
         }
-        //gọi ajax
     }
     public function update_room($name, $img_url){
+        //lấy id
+        //update phòng
+        //lấy danh sách phòng
+        //cập nhật phòng đang hđ
         $id = $_SESSION["room_active"]["id"];
-        $model_name = $this->model('room')->update_room($name, $img_url, $id);
+        $model_name = $this->model('user')->update_room($name, $img_url, $id);
         if($model_name){
-            $_SESSION["room"][$id - 1]["name"] = $name;
-            $_SESSION["room"][$id - 1]["img"] = $img_url;
+            $_SESSION["room"] = $this->cus_array($this->model('user')->get_room($_SESSION["house_active"]["id"]));//2
             $_SESSION["room_active"]["name"] = $name;
             $_SESSION["room_active"]["img"] = $img_url;
             echo "ok";
@@ -78,7 +67,7 @@ class room extends Controller{
         {
             //$_SESSION["room_active"] = $_SESSION["room"][array_search($room_id, $_SESSION["room"])];
             $_SESSION["room_active"] = $_SESSION["room"][$room_id];
-            $this->home_view();
+            $this->room_view();
         }
         else{
             var_dump($_SESSION["room_active"]);
@@ -89,12 +78,14 @@ class room extends Controller{
     }
     //tạo thao tác
     public function create_led($name){
-        $model_name = mysqli_fetch_array($this->model('led')->create_led($name, $_SESSION["room_active"]["id"]));
+        //tạo led
+        //tạo feed
+        //tạo block
+        $model_name = $this->model('user')->create_led($name, $_SESSION["room_active"]["id"]);
         if($model_name){
-            $index = array_search($_SESSION["room_active_led"], $_SESSION["room_led"]);
-            $_SESSION["room_active_led"] = mysqli_fetch_array($this->model('led')->get_led($_SESSION["room_active"]["id"]));
-            $_SESSION["room_led"][$index] = $_SESSION["room_active_led"];
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . $name);//
+            $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
+            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"]["id"]));
+            $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"]["id"]));
             echo "ok";
         }
         else{
@@ -103,12 +94,13 @@ class room extends Controller{
     }
     
     public function create_fan($name){
-        $model_name = mysqli_fetch_array($this->model('fan')->create_fan($name, $_SESSION["room_active"]["id"]));
+        //tạo led
+        //tạo feed + block
+        $model_name = $this->model('user')->create_fan($name, $_SESSION["room_active"]["id"]);
         if($model_name){
-            $index = array_search($_SESSION["room_active_fan"], $_SESSION["room_fan"]);
-            $_SESSION["room_active_fan"] = mysqli_fetch_array($this->model('fan')->get_fan($_SESSION["room_active"]["id"]));
-            $_SESSION["room_fan"][$index] = $_SESSION["room_active_fan"];
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . $name);//
+            $_SESSION["room_fan"] = $this->cus_array($this->model('user')->get_fan($_SESSION["room_active"]["id"]));
+            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));
+            $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));
             echo "ok";
         }
         else{
@@ -116,13 +108,26 @@ class room extends Controller{
         }
     }
     
-    public function create_gas($name){
-        $model_name = mysqli_fetch_array($this->model('gas')->create_gas($name, $_SESSION["room_active"]["id"]));
+    public function set_gas($name){
+        $this->model('user')->set_gas($name, $_SESSION["room_active"]["id"]);
+        $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas'));
+        $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas'));
+    }
+    
+    public function set_temperature(){
+        $this->model('user')->set_temp($name, $_SESSION["room_active"]["id"]);
+        $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temp'));
+        $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temp'));
+    }
+
+
+    public function delete_led($name){
+        //tạo led
+        //tạo feed
+        $model_name = $this->model('user')->create_led($name, $_SESSION["room_active"]["id"]);
         if($model_name){
-            $index = array_search($_SESSION["room_active_gas"], $_SESSION["room_gas"]);
-            $_SESSION["room_active_gas"] = mysqli_fetch_array($this->model('gas')->get_gas($_SESSION["room_active"]["id"]));
-            $_SESSION["room_gas"][$index] = $_SESSION["room_active_gas"];
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas-' . $name);//
+            $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
+            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"]["id"]));//
             echo "ok";
         }
         else{
@@ -130,18 +135,26 @@ class room extends Controller{
         }
     }
     
-    public function create_temperature(){
-        $model_name = mysqli_fetch_array($this->model('temperature')->create_temperature($_SESSION["room_active"]["id"]));
+    public function delete_fan($name){
+        //xóa feed + block
+        //xóa led
+        $model_name = $this->model('user')->create_fan($name, $_SESSION["room_active"]["id"]);
         if($model_name){
-            $index = array_search($_SESSION["room_active_temperature"], $_SESSION["room_temperature"]);
-            $_SESSION["room_active_temperature"] = mysqli_fetch_array($this->model('temperature')->get_temperature($_SESSION["room_active"]["id"]));
-            $_SESSION["room_temperature"][$index] = $_SESSION["room_active_temperature"];
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temperature-' . $name);//
+            $_SESSION["room_fan"] = $this->cus_array($this->model('user')->get_fan($_SESSION["room_active"]["id"]));
+            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));//
             echo "ok";
         }
         else{
             echo $model_name;
         }
+    }
+    
+    public function set_gas($name){
+        $this->model('user')->unset_gas($name, $_SESSION["room_active"]["id"]);
+    }
+    
+    public function set_temperature(){
+        $this->model('user')->set_temp($name, $_SESSION["room_active"]["id"]);
     }
 }
 ?>

@@ -1,8 +1,8 @@
 <?php
 class App{
 //Home/Function/para/para
-    protected $controller="notify";
-    protected $action="notify_view";
+    protected $controller="login";
+    protected $action="login_view";
     protected $params=[];
 
     function __construct(){
@@ -25,14 +25,12 @@ class App{
         }
         $this->params = [];
         // Params
-        if(!empty($arr)) array_push($this->params,$arr);
-        if(!empty($this->params)){
-            call_user_func_array([$this->controller, $this->action], $this->params);
+        if(!empty($arr)) {
+            for($x = 2; $x < count($arr) + 2; $x++){
+                array_push($this->params, $arr[$x]);
+            }
         }
-        else{
-            call_user_func_array([$this->controller, $this->action], $this->params);
-        }
-
+        call_user_func_array([$this->controller, $this->action], $this->params);
     }
     function UrlProcess(){
         if( isset($_GET["url"]) ){

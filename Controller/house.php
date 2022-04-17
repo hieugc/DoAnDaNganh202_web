@@ -6,26 +6,42 @@ class house extends Controller{
         if(!isset($_SESSION["user_name"])){
             $this->view("login");
         }
+        //lấy danh sách phòng
+        //phòng mặc định
+        $_SESSION["room"] = $this->cus_array($this->model("user")->get_room($_SESSION["house_active"]["id"]));//lay full phong
+        if(count($_SESSION["room"]) != 0){
+            $_SESSION["room_active"] = $_SESSION["room"][0];
+        }
+        //lấy danh sách method ở nhà chưa làm
         $this->view("house");
     }
     public function create_house($name, $img_url){
-        $model_name = mysqli_fetch_array($this->model('house')->create_house($name, $img_url, $_SESSION["user_name"])) ;
+        //tạo mới nhà
+        //lấy lại danh sách nhà
+        //nhà = 1 set 1 mặc định
+        $model_name = $this->model('user')->create_house($name, $img_url, $_SESSION["user_name"]);
         if($model_name){
-            $_SESSION["house"] = mysqli_fetch_array($this->model('house')->get_house($_SESSION["user_name"]));
+            $_SESSION["house"] = $this->cus_array($this->model('user')->get_house($_SESSION["user_name"]));
+            if(count($_SESSION["house"]) == 1)
+            {
+                $_SESSION["house_active"] = $_SESSION["house"][0];
+            }
         }
         else{
-            echo $model_name;
+            var_dump($model_name);
         }
     }
     public function update_house($name, $img_url){
+        //lấy id nhà đang hoạt động
+        //cập nhật lại thông tin trong danh sách nhà
+        //cập nhật nhà hoạt động
         $id = $_SESSION["house_active"]["id"];
-        $model_name = $this->model('house')->update_house($name, $img_url, $id);
+        $model_name = $this->model('user')->update_house($name, $img_url, $id);
         if($model_name){
-            $_SESSION["house"][$id - 1]["name"] = $name;
-            $_SESSION["house"][$id - 1]["img"] = $img_url;
+            $_SESSION["house"] = $this->cus_array($this->model('user')->get_house($_SESSION["user_name"]));
             $_SESSION["house_active"]["name"] = $name;
             $_SESSION["house_active"]["img"] = $img_url;
-            echo "ok";
+            echo "ok";//tín hiệu
         }
         else{
             echo $model_name;
@@ -49,7 +65,10 @@ class house extends Controller{
         if(isset($_SESSION["house_active"]) && isset($_SESSION["house"]))
         {
             //$_SESSION["house_active"] = $_SESSION["house"][array_search($house_id, $_SESSION["house"])];
-            $_SESSION["house_active"] = $_SESSION["house"][$house_id];
+            $_SESSION["house_active"] = $_SESSION["house"][$house_id];//đổi nhà
+            //đổi danh sách phòng => hàm dưới đã làm
+            //đổi phòng mặc định => hàm dưới đã làm
+            //lấy danh sách nhà method => hàm dưới đã làm
             $this->house_view();
         }
         else{
@@ -57,43 +76,73 @@ class house extends Controller{
             var_dump($_SESSION["house"]);
         }
     }
-    /*
-    public function create_dashboard($name){
-        $data = array(
-            "dashboard" => array(
-                "name" => "User-" . $_SESSION["user_name"] . '-' . $_SESSION["house_active"]["name"] . '-' . $name
-            )
-        );
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 0,
-            CURLOPT_URL => 'https://io.adafruit.com/api/v2/Hieupham2502/dashboards/',
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Content-Length'.strlen(json_encode($data)),
-                'X-AIO-Key: aio_vmAg27wiuVuco7Rj2qaRqxw9vX2Q'
-            ),  
-            CURLOPT_POST => 1, 
-            CURLOPT_POSTFIELDS => json_encode($data)
-        ));
-        $resp = curl_exec($curl);
-        curl_close($curl);
-    }*/
     public function create_room($name, $img_url){
-        $model_name = mysqli_fetch_array($this->model('room')->create_room($name, $img_url, $_SESSION["house_active"]["id"]));
+        //tạo mới phòng
+        //lấy lại danh sách phòng
+        //nếu số phòng = 1 set mặc định
+        //tạo dashboard mới
+        //trả tín hiệu => AJAX
+        $model_name = $this->model('user')->create_room($name, $img_url, $_SESSION["house_active"]["id"]);//1
         if($model_name){
-            $_SESSION["room"] = mysqli_fetch_array($this->model('room')->get_room($_SESSION["house_active"]["id"]));
-            $this->model('adafruit')->create_dashboard( $_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $name);//
-            echo "ok";
+            $_SESSION["room"] = $this->cus_array($this->model('user')->get_room($_SESSION["house_active"]["id"]));//2
+            if(count($_SESSION["room"]) == 1){//3
+                $_SESSION["room_active"] = $_SESSION["room"][0];
+            }
+            $this->model('adafruit')->create_dashboard( $_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . end($_SESSION["room"])["id"]);//4
+            echo "ok";//5
         }
         else{
             echo $model_name;
         }
-        //gọi ajax
     }
-    public function create_method(){
+    public function get_all_led_in_room($id){
+        return $this->cus_array($this->model('user')->get_led($id));
+    }
+    public function get_all_fan_in_room($id){
+        return $this->cus_array($this->model('user')->get_fan($id));
+    }
+    public function get_all_room_with_device(){
+        //nếu cả 2 null => ẩn phòng
+        //echo ra html của phòng
+        //echo ra html của led
+        //echo ra html của fan
+        $_SESSION["all_led"] = array();
+        $_SESSION["all_fan"] = array();
+        for($i = 0; $i < count($_SESSION["room"]); $i++)
+        {
+            $led = $this->get_all_led_in_room($_SESSION["room"][$i]["id"]);
+            $fan = $this->get_all_fan_in_room($_SESSION["room"][$i]["id"]));
+            var_dump($fan);
+            var_dump($led)
+            if($fan == NULL && $led == NULL) continue;
+        }
+    }
+    public function create_device_in_method($device, $value, $method){
+        //gọi hàm tạo
+
+    }
+    public function create_method($name, $data){
+        //dùng danh sach các phòng => lấy thiết bị trong nó
+        //
+    }
+    
+    public function delete_method($id){
+        //xóa danh sách device in method
+        //xóa method
+    }
+    public function update_name_method($id, $name){
+        //gọi hàm đổi tên
+    }
+    public function update_device_method($id, $name, $data){
+        //gọi delete
+        //gọi create :)
+        //trả lại id
+    }
+    public function execute_method($id){
+        //lấy danh sách feed
+        //gửi dữ liệu lên adafuit
+        //lấy dữ liệu về so sánh value trong method
+        //cập nhật dữ liệu vào thiết bị
     }
 }
 ?>
