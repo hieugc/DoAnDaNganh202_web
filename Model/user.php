@@ -20,8 +20,8 @@
         }
         public function set_account($USERNAME, $PWD, $uname){
             $query =    "UPDATE `user`
-                        SET `user`.`USERNAME` = \"" . $USERNAME . "\"
-                        AND	`user`.`PWD` = \"" . $USERNAME . "\"
+                        SET `user`.`USERNAME` = \"" . $USERNAME . "\",
+                        	`user`.`PWD` = \"" . $USERNAME . "\"
                         WHERE `user`.`USERNAME` = \"" . $uname . "\";" ;
             return mysqli_query($this->connect, $query);
         }
@@ -45,8 +45,8 @@
         }
         public function update_house($name, $img_url, $id){
             $query =    "UPDATE `house`
-                        SET `house`.`NAME` = \"" . $name . "\"
-                        AND	`house`.`URL_IMG` = \"" . $img_url . "\"
+                        SET `house`.`NAME` = \"" . $name . "\",
+                        	`house`.`URL_IMG` = \"" . $img_url . "\"
                         WHERE `house`.`id` = " . $id . ";" ;
             return mysqli_query($this->connect, $query);
         }
@@ -74,8 +74,8 @@
         }
         public function update_room($name, $img_url, $id){
             $query =    "UPDATE `room`
-                        SET `room`.`NAME` = \"" . $name . "\"
-                        AND	`room`.`URL_IMG` = \"" . $img_url . "\"
+                        SET `room`.`NAME` = \"" . $name . "\",
+                        	`room`.`URL_IMG` = \"" . $img_url . "\"
                         WHERE `room`.`ID` = " . $id . ";" ;
             return mysqli_query($this->connect, $query);
         }
@@ -121,9 +121,10 @@
         }
         public function update_led($name, $value, $id){
             $query =    "UPDATE `led`
-                        SET `led`.`NAME` = \"" . $name . "\"
-                        AND	`led`.`VALUE` = " . $value . "
+                        SET `led`.`NAME` = \"" . $name . "\",
+                        	`led`.`VALUE` = " . $value . "
                         WHERE `led`.`ID` = " . $id . ";" ;
+            echo $query;
             return mysqli_query($this->connect, $query);
         }
         public function delete_led($id){
@@ -144,8 +145,8 @@
         }
         public function update_fan($name, $value, $id){
             $query =    "UPDATE `fan`
-                        SET `fan`.`NAME` = \"" . $name . "\"
-                        AND	`fan`.`VALUE` = " . $value . "
+                        SET `fan`.`NAME` = \"" . $name . "\",
+                        	`fan`.`VALUE` = " . $value . "
                         WHERE `fan`.`ID` = " . $id . ";" ;
             return mysqli_query($this->connect, $query);
         }

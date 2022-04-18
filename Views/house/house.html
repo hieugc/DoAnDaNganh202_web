@@ -24,7 +24,41 @@
             </span>
           </div>          
         </div>
-        <div class="body"></div>
+        <div class="body">
+          <div class="list">
+            <div class="item">
+              <a href="?url=room/room_view">
+              <h1>Phòng 1</h1></a>
+            </div>
+            
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div><div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+            <div class="item">
+              <h1>Phòng 1</h1>
+            </div>
+          </div>
+        </div>
         <div class="nav">
             <div class="nav_item">
             <div class="icon">
@@ -60,6 +94,67 @@
             </div>
         </div>
     </div>
-    <script src="./notify.js"></script>
+    <div id="myModal_house" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-head-house">
+        <div class="head_left">
+          <span class="material-icons">
+              other_houses
+              </span>
+              <h1 class="namehouse">Nhà 1</h1>
+        </div>
+      </div>
+      <div class="modal-content-house">
+        <div class="bot-item">
+          <h3>Nhà 1</h3>
+        </div>
+        <div class="bot-item">
+          <h3>Nhà 2</h3>
+        </div>
+        <hr />
+          <div class="bot-item">
+            <h3>Cài đặt nhà</h3><span class="material-icons">
+              settings
+              </span>
+          </div>
+          <div class="bot-item">
+            <h3>Thêm nhà</h3><span class="material-icons">
+              add_circle
+              </span>
+          </div>
+          <div class="bot-item">
+            <h3>Đăng xuất</h3><span class="material-icons">
+              logout
+              </span>
+          </div>
+      </div>
+    
+    </div>
+    <div id="myModal_settinghouse" class="modal" style="display: none;">
+      <div class="myModal_settinghouse_content">
+        <div class="head-settinghouse">
+          <div class="left">
+            <span class="material-icons">
+              arrow_back_ios
+              </span><h1>Nhà</h1>
+          </div>
+          <h1 class="right">Xong</h1>
+        </div>
+        <div class="content-settinghouse">
+          <h1>Tên nhà</h1>  
+          <input type="text" placeholder="Nhà.." name="search">
+          <h1 style="margin-top: 60px;">Hình nền nhà</h1>
+          <div class="image-edit">
+              <h3 style="padding-bottom: 10px;border-bottom: 1px solid #EA8C00;"><label for="image" style="display: flex;justify-content: space-between;">Chọn ảnh<span class="material-icons">
+                arrow_forward_ios
+                </span></label></h3><input type="file" name="image" hidden>
+              <h3 style="margin-top: 10px;display: flex;justify-content: space-between;">Màu mặc định<div style="height: 50px; width: 50px;border: 1px solid #EA8C00;background-color: white;"></div></h3>
+          </div>
+          <div style="display: flex;justify-content: center;" id="delete"><h2 class="delete">Xóa nhà</h2></div>
+        </div>
+      </div>
+    </div>
+    <script src="./house.js"></script>
   </body>
 </html>

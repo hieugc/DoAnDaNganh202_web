@@ -3,6 +3,7 @@
     display: flex;
     justify-content:space-around;
     margin: 5px 10px;
+    color: black;
 }
 
 .nav_item{
@@ -13,12 +14,20 @@
     font-size: 20px;
     text-align: center;
 }
+
+.nav_item *{
+    text-decoration: none;
+}
 .icon span.material-icons{
     font-size: 30px;
+    color: black;
+}
+.title{
+    color: black;
 }
 .nav_item.active{
-    border-top: 2px solid aqua;
+    border-top: 2px solid #2196F3;
 }
 .nav_item.active *{
-    color: aqua;
+    color: #2196F3 !important;
 }

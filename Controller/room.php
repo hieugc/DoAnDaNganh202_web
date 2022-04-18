@@ -86,8 +86,9 @@ class room extends Controller{
         $model_name = $this->model('user')->create_led($name, $_SESSION["room_active"]["id"]);
         if($model_name){
             $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"]["id"]));
-            $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"]["id"]));
+            echo end($_SESSION["room_led"])["id"];
+            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"])["id"]);
+            $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"])["id"]);
             echo "ok";
         }
         else{
@@ -112,14 +113,14 @@ class room extends Controller{
     
     public function set_gas($name){
         $this->model('user')->set_gas($name, $_SESSION["room_active"]["id"]);
-        $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas'));
-        $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas'));
+        $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas');
+        $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'gas');
     }
     
     public function set_temperature(){
         $this->model('user')->set_temp($name, $_SESSION["room_active"]["id"]);
-        $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temp'));
-        $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temp'));
+        $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temp');
+        $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'temp');
     }
 
 
@@ -150,13 +151,29 @@ class room extends Controller{
             echo $model_name;
         }
     }
-    
-    public function set_gas($name){
-        $this->model('user')->unset_gas($name, $_SESSION["room_active"]["id"]);
+    public function update_device($name, $value, $device){
+        var_dump($name);
+        if(explode("-", $device)[0] == "led"){
+            $this->updateLed($name, $value, explode("-", $device)[1]);
+        }
+        else{
+            $this->updateFan($name, $value, explode("-", $device)[1]);
+        }
+        if($value == 0){
+            $value = explode("-", $device)[1]*2-2;
+        }
+        else{
+            $value = explode("-", $device)[1]*2-1;
+        }
+        $this->model("adafruit")->create_data($_SESSION["user_name"] . "." . $_SESSION["user_name"], "house-" . $_SESSION["house_active"]["id"], "room-" . $_SESSION["room_active"]["id"], $device, $value);
     }
-    
-    public function set_temperature(){
-        $this->model('user')->set_temp($name, $_SESSION["room_active"]["id"]);
+    public function updateLed($name, $value, $id){
+        //update DB
+        echo $this->model("user")->update_led($name, $value, $id);
+    }
+    public function updateFan($name, $value, $id){
+        //update DB
+        echo $this->model("user")->update_fan($name, $value, $id);
     }
 }
 ?>
