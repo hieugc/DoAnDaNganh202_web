@@ -1,6 +1,6 @@
 <script>
   export default {
-    name: 'Modal',
+    name: 'ModalEdit',
     methods: {
       close() {
         this.$emit('close');
@@ -12,39 +12,26 @@
 <template>
   <div class="modal-backdrop">
     <div class="modal">
-      <div class="headNew">
-        <button
-          type="button"
-          class="btn-close block"
-          @click="close"
-        >
-          x
-        </button>
-      </div>
-      <div class="modal-header">
-        <!-- <slot name="header">
-          This is the default title!
-        </slot> -->
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left">
-          Nhà 1
-        </button>
-      </div>
-
-      <section class="modal-body flex content-between">
+      <header class="flex justify-between m-1">
+        <div>
+          <svg class="h-8 w-8 text-red-500 inline"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="15 6 9 12 15 18" /></svg>
+          Nhà
+        </div>
+        <span>Xong</span>
+      </header>
+      <section class="flex justify-between flex-col">
+        <div class=" m-1">
+        Tên nhà:
+        </div>
+        <div class=" m-1">
+          <input type="text" value="Nhà 1" class="w-full">
+        </div>
+        
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1">
-          <div>
-          Cài đặt nhà
-          </div>
-          <svg class="h-6 w-6 text-pink-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />  <circle cx="12" cy="12" r="3" /></svg>
+          <div>Xóa nhà</div>
+          <svg class="h-6 w-6 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="4" y1="7" x2="20" y2="7" />  <line x1="10" y1="11" x2="10" y2="17" />  <line x1="14" y1="11" x2="14" y2="17" />  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
         </button>
-
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1">
-          <div>Thêm nhà mới</div>
-          <svg class="h-6 w-6 text-pink-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="12" r="9" />  <line x1="9" y1="12" x2="15" y2="12" />  <line x1="12" y1="9" x2="12" y2="15" /></svg>
-        </button>
-
-       </section>
-
+      </section>
       <footer class="modal-footer">
         <!-- <slot name="footer">
           This is the default footer!
@@ -84,8 +71,9 @@
   flex-direction: column;
   /* top: 80px;
   left: 50px; */
-  margin: 60px 40px;
+  margin: 60px 0;
   width: auto;
+  justify-content: space-around;
 }
 
 .headNew  {

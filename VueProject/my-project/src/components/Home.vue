@@ -1,6 +1,7 @@
 <script>
 
-import Modal from './ModalHomeTop.vue';
+// import Modal from './ModalHomeTop.vue';
+import Modal from './ModalHomeAdd.vue';
 
 export default {
   name: 'App',
