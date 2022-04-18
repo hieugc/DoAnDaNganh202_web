@@ -146,7 +146,5 @@
   border-radius: 2px;
 }
 
-.btnVIP {
-  /* width: 100px; */
-}
+
 </style>

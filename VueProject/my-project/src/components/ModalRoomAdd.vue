@@ -17,8 +17,8 @@
 </script>
 
 <template>
-  <div class="modal-backdrop">
-    <div class="modal">
+  <div class="modal-backdrop" @click.self="close">
+    <div class="modal" >
       <header class="flex justify-between m-1">
         <div>
           <svg class="h-8 w-8 text-red-500 inline"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="15 6 9 12 15 18" /></svg>
@@ -26,23 +26,24 @@
         </div>
         <span>Xong</span>
       </header>
-      <section class="flex justify-between flex-col">
-        <div class=" m-1">
-        Tên nhà:
-        </div>
-        <div class=" m-1">
-          <input type="text" value="Nhà 1" class="w-full">
-        </div>
-        
-        <div class=" m-1">
-        Màu nhà:
-        </div>
-        
+      <section class="flex justify-between flex-col">     
 
         
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1">
-          <div>Không biết làm</div>
-          <svg class="h-6 w-6 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="4" y1="7" x2="20" y2="7" />  <line x1="10" y1="11" x2="10" y2="17" />  <line x1="14" y1="11" x2="14" y2="17" />  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full block text-left flex m-1">
+          <svg class="h-6 w-6 text-red-500 mr-1"  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          @click="showModalAddRoom"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div>Thêm phòng</div>
+        </button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full block text-left flex m-1">
+          <svg class="h-6 w-6 text-red-500 mr-1"  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          @click="showModalAddRoom"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div>Thêm thao tác</div>
         </button>
       </section>
       <footer class="modal-footer">
@@ -84,7 +85,7 @@
   flex-direction: column;
   /* top: 80px;
   left: 50px; */
-  margin: 60px 0;
+  margin: 60px 50px;
   width: auto;
   justify-content: space-around;
 }

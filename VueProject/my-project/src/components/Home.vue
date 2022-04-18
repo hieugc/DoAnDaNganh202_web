@@ -2,15 +2,18 @@
 
 // import Modal from './ModalHomeTop.vue';
 import Modal from './ModalHomeAdd.vue';
+import ModalRoomAdd from './ModalRoomAdd.vue';
 
 export default {
   name: 'App',
   components: {
     Modal,
+    ModalRoomAdd,
   },
   data() {
     return {
       isModalVisible: false,
+      isModalAddRoomVisible: false,
     };
   },
   methods: {
@@ -19,6 +22,12 @@ export default {
     },
     closeModal() {
       this.isModalVisible = false;
+    },
+    showModalAddRoom() {
+      this.isModalAddRoomVisible = true;
+    },
+    closeModalAddroom() {
+      this.isModalAddRoomVisible = false;
     }
   }
 };
@@ -26,18 +35,32 @@ export default {
 
 <template>
     <div class="containner">
-      <h1 class="head">
+      <div class="head flex justify-between ">
+        <h1 class="flex content-between">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}> <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /> </svg> -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-        :style="{ display: 'inline'}" @click="showModal"
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+          :style="{ display: 'inline'}" @click="showModal"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg> 
+          <span>Nhà</span> 
+
+        </h1>
+        <svg class="h-12 w-12 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        @click="showModalAddRoom"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-        </svg> Nhà
-      </h1>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
 
 			<Modal
 				v-show="isModalVisible"
 				@close="closeModal"
+			/>
+
+      <ModalRoomAdd
+				v-show="isModalAddRoomVisible"
+				@close="closeModalAddroom"
 			/>
 
       <div class="list">
@@ -100,7 +123,7 @@ export default {
           <div class="icon">
             <span class="material-icons">
               home
-              </span>
+            </span>
           </div>
           <div class="title">
               Nhà
@@ -144,8 +167,8 @@ export default {
 }
 
 .head{
-    padding: 10px 16px;
-    margin: 5px 20px;
+    /* padding: 10px 16px; */
+    margin: 15px 20px;
     border-bottom: 2px solid black;
 }
 .list{
