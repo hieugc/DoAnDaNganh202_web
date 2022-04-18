@@ -1,12 +1,12 @@
 <?php
     class adafruit{
         protected $ADAFRUIT_IO_USERNAME = "Hieupham2502";
-        protected $ADAFRUIT_IO_KEY = "aio_WgpM704sRFtiS7EBVN77EsjV3XJn";
+        protected $ADAFRUIT_IO_KEY = "aio_qMKd509Cc6BrxF5q6tCNO71NrQ9V";
         private function cus_curl($data, $type, $method){
             $curl = curl_init();
-            #echo 'https://io.adafruit.com/api/v2/' . $this->ADAFRUIT_IO_USERNAME . $type;
+            //var_dump(json_encode($data));
             curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_URL => 'https://io.adafruit.com/api/v2/' . $this->ADAFRUIT_IO_USERNAME . $type,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_HTTPHEADER => array(
@@ -38,22 +38,27 @@
                 ),
                 'visibility' => 'public'
             );
-        }
-        
-        private function makeDataBlock($string, $name){
+        } 
+        private function makeDataBlock($string, $name, $key){//ch xong
             return array(
                 'block' => array(
                     'name' => $string,
-                    'visual_type' => "1",//ch xong
-                    'properties' => json_encode([
-                        'onValue' => 0,
-                        'offValue' => 1
-                        ]),
-                    'block_feeds' => [
-                        json_encode([
-                            'name' => $name
-                            ])
-                    ]
+                    'visual_type' => "toggle_button",//ch xong
+                    'properties' => [
+                        'onValue' => '1',
+                        'offValue' => '0'
+                        ],
+                    'block_feeds' => array(
+                        [
+                            'feed' => [
+                                'key' => "hieupham.hieupham-house-1-room-1-led-20",
+                                'name' => "hieupham-house-1-room-1-led-20"
+                            ],
+                            'group' =>[
+                                'name' => $key
+                            ]
+                        ]
+                    )
                 )
             );
         }//led + fan => toggle_button
@@ -67,14 +72,14 @@
         public function create_feed($user, $house, $room, $device){
             $this->cus_curl($this->makeData("name", $this->makeString(array($user, $house, $room, $device)), 'feed'), '/feeds?group_key=' . $user, 'POST');
         }
-        //led-id
+        //
         public function create_data($user, $house, $room, $device, $value){
             $this->cus_curl($this->makeData("value", $value, 'datum'), '/feeds/' . $this->makeString(array($user, $house, $room, $device)) .'/data/', 'POST');
         }
         public function create_block($user, $house, $room, $device){
-            $this->cus_curl($this->makeDataBlock($device, $this->makeString(array($user, $house, $room, $device))), '/dashboards?dashboard_key=' . $this->makeString(array($user, $house, $room)), 'POST');
+            $this->cus_curl($this->makeDataBlock($device, $this->makeString(array($user, $house, $room, $device)), $user), '/dashboards/' . $this->makeString(array($user, $house, $room)) . "/blocks", 'POST');
         }
-        //
+        //get xài đc hết
         public function get_last_data($user, $house, $room, $device){
             return $this->cus_curl('', '/feeds/' . $this->makeString(array($user, $house, $room, $device)) . '/data?limit=1', 'GET');
         }

@@ -37,6 +37,7 @@ function draw_gas(){
       if (this.readyState == 4 && this.status == 200) {
         if(this.responseText != "null")
         {
+          console.log(this.responseText);
           let demo = JSON.parse(this.responseText);
           var arr = demo.split("},{");
           var data_gas = [];

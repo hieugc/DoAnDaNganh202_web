@@ -36,7 +36,30 @@ CREATE TABLE `FAN`(
   `ROOM_ID` BIGINT,
   FOREIGN KEY (ROOM_ID) REFERENCES ROOM(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE `NOTIFY`(
+  `ID` BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `CONTENT` VARCHAR(100),
+  `VALUE` INT
+);
 
 INSERT INTO `user` VALUES('hieupham', '123');
-INSERT INTO `house` (`house`.`NAME`, `house`.`URL_IMG`, `house`.`USERNAME`) VALUES('abc', 'abc', 'hieupham');
-INSERT INTO `room`(`room`.`NAME`, `room`.`URL_IMG`, `room`.`HOUSE_ID`, `room`.`TEMPERATURE`, `room`.`GAS`) VALUES('abc', 'abc', 1, 1, 1);
+
+INSERT INTO `house` (`house`.`NAME`, `house`.`URL_IMG`, `house`.`USERNAME`) 
+VALUES('Nhà 1', 'default', 'hieupham'),
+('Nhà 2', 'default', 'hieupham');
+
+INSERT INTO `room`(`room`.`NAME`, `room`.`URL_IMG`, `room`.`HOUSE_ID`, `room`.`TEMPERATURE`, `room`.`GAS`) 
+VALUES('Phòng 1', 'default', 1, 1, 1),
+('Phòng 2', 'default', 1, 1, 1),
+('Phòng 3', 'default', 1, 1, 1),
+('Phòng 4', 'default', 1, 1, 1),
+('Phòng 5', 'default', 1, 1, 1),
+('Phòng cuối', 'default', 1, 1, 1);
+
+INSERT INTO `led`(`led`.`NAME`, `led`.`VALUE`, `led`.`ROOM_ID`) 
+VALUES ("Đèn 1", 0, 1),
+("Đèn phòng", 0, 1);
+
+INSERT INTO `fan`(`fan`.`NAME`, `fan`.`VALUE`, `fan`.`ROOM_ID`) 
+VALUES ("Quạt đứng", 0, 1),
+("Quạt trần", 0, 1);

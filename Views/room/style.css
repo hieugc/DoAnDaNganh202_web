@@ -31,21 +31,15 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 20px;
-}
-.item{
-    width: 50%;
-    display: flex;
     justify-content: center;
 }
-.item:hover{
-    color: aqua;
-    border-color: aqua;
-}
-.item *{
-    text-decoration: none;
+.item{
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 .item h1{
-    color: black;
     text-align: center;
     padding: 15px 0;
     width: 160px;
@@ -148,6 +142,106 @@
     color: white;
     background-color: red;
 }
+.dashboard{
+    display: flex;
+    justify-content: space-between;
+}
+.dashboard > div{
+    margin-top: 10px;
+    padding: 20px 5px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px 0 rgba(210, 127, 10, 0.2), 0 6px 20px 0 rgba(189, 115, 11, 0.19);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.dashboard > div h3{
+    text-align: center;
+}
+
+.nav{
+    display: flex;
+    justify-content:space-around;
+    margin: 5px 10px;
+}
+
+.nav_item{
+    width: 33.33%;
+    padding-top: 5px;
+    display: flex;
+    flex-flow: column;
+    font-size: 20px;
+    text-align: center;
+}
+.icon span.material-icons{
+    font-size: 30px;
+}
+.nav_item.active{
+    border-top: 2px solid aqua;
+}
+.nav_item.active *{
+    color: aqua;
+}
 #myModal_house{
     display: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
