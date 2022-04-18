@@ -89,9 +89,9 @@ room_preferences
       <!-- Modal content -->
       <div class="modal-head-house">
         <div class="head_left">
-          <span class="material-icons">
-              other_houses
-              </span>
+        <span class="material-icons">
+room_preferences
+</span>
               <h1 class="namehouse"><?php if(isset($_SESSION["room_active"])) echo $_SESSION["room_active"]["name"] ?></h1>
         </div>
       </div>

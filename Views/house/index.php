@@ -96,7 +96,7 @@
         </div>
         <div class="content-settinghouse">
           <h1>Tên nhà</h1>  
-          <input type="text" placeholder="Nhà.." name="search">
+          <input type="text" placeholder="" name="search">
           <h1 style="margin-top: 60px;">Hình nền nhà</h1>
           <div class="image-edit">
               <h3 style="padding-bottom: 10px;border-bottom: 1px solid #EA8C00;"><label for="image" style="display: flex;justify-content: space-between;">Chọn ảnh<span class="material-icons">

@@ -34,10 +34,12 @@ h2{
     display: flex;
     justify-content: center;
 }
-.btn p{
+.btn *{
     min-width: 140px;
     padding: 20px 0;
     background-color: black;
     border-radius: 30px;
     font-size: 30px;
+    text-decoration: none; 
+    color: white; 
 }
