@@ -10,7 +10,7 @@
 </script>
 
 <template>
-  <div class="modal-backdrop">
+  <div class="modal-backdrop"  @click.self="close">
     <div class="modal">
       <header class="flex justify-between m-1">
         <div>

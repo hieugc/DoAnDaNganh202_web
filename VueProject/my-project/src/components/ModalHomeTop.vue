@@ -1,10 +1,12 @@
 <script>
 import ModalEdit from './ModalHomeEdit.vue';
+import ModalAdd from './ModalHomeAdd.vue';
 export default {
   name: 'Modal',
   data() {
     return {
       isModalEditVisible: false,
+      isModalAddVisible: false,
     };
   },
   methods: {
@@ -17,9 +19,16 @@ export default {
     closeModal() {
       this.isModalEditVisible = false;
     },
+    showModalAdd() {
+      this.isModalAddVisible = true;
+    },
+    closeModalAdd() {
+      this.isModalAddVisible = false;
+    },
   },
   components: {
     ModalEdit,
+    ModalAdd,
   }
 };
 </script>
@@ -53,7 +62,7 @@ export default {
           <svg class="h-6 w-6 text-pink-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />  <circle cx="12" cy="12" r="3" /></svg>
         </button>
 
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1" @click="showModalAdd">
           <div>Thêm nhà mới</div>
           <svg class="h-6 w-6 text-pink-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="12" r="9" />  <line x1="9" y1="12" x2="15" y2="12" />  <line x1="12" y1="9" x2="12" y2="15" /></svg>
         </button>
@@ -75,10 +84,15 @@ export default {
     </div>
   
     <ModalEdit
-    v-show="isModalEditVisible"
-    @close="closeModal"
+      v-show="isModalEditVisible"
+      @close="closeModal"
+    />
+    <ModalAdd
+      v-show="isModalAddVisible"
+      @close="closeModalAdd"
+    />
 
-  />
+
   </div>
 
 
