@@ -1,16 +1,31 @@
 <script>
-  export default {
-    name: 'Modal',
-    methods: {
-      close() {
-        this.$emit('close');
-      },
+import ModalEdit from './ModalHomeEdit.vue';
+export default {
+  name: 'Modal',
+  data() {
+    return {
+      isModalEditVisible: false,
+    };
+  },
+  methods: {
+    close() {
+      this.$emit('close');
     },
-  };
+    showModal() {
+      this.isModalEditVisible = true;
+    },
+    closeModal() {
+      this.isModalEditVisible = false;
+    },
+  },
+  components: {
+    ModalEdit,
+  }
+};
 </script>
 
 <template>
-  <div class="modal-backdrop">
+  <div class="modal-backdrop"  @click.self="close">
     <div class="modal">
       <div class="headNew">
         <button
@@ -31,7 +46,7 @@
       </div>
 
       <section class="modal-body flex content-between">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full block text-left justify-between flex m-1" @click="showModal">
           <div>
           Cài đặt nhà
           </div>
@@ -58,7 +73,15 @@
         </button>
       </footer>
     </div>
+  
+    <ModalEdit
+    v-show="isModalEditVisible"
+    @close="closeModal"
+
+  />
   </div>
+
+
 </template>
 
 

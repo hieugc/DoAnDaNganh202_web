@@ -1,7 +1,7 @@
 <script>
 
 // import Modal from './ModalHomeTop.vue';
-import Modal from './ModalHomeAdd.vue';
+import Modal from './ModalHomeTop.vue';
 import ModalRoomAdd from './ModalRoomAdd.vue';
 
 export default {
@@ -52,7 +52,17 @@ export default {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
       </div>
-
+      
+      <div class="content">
+      <h2 class="functionHeader">Tính năng</h2>
+      <div class="functionList">
+        <div class="functionBox"><p>Function</p></div>
+        <div class="functionBox"><p>Function</p></div>
+        <div class="functionBox"><p>Function</p></div>
+        <div class="functionBox"><p>Function</p></div>
+        <div class="functionBox"><p>Function</p></div>
+      </div>
+      </div>
 			<Modal
 				v-show="isModalVisible"
 				@close="closeModal"
@@ -62,55 +72,6 @@ export default {
 				v-show="isModalAddRoomVisible"
 				@close="closeModalAddroom"
 			/>
-
-      <div class="list">
-        <div class="notify_item">
-          <div class="notify_head_item">
-            <div class="notify_head_left_item">Nhà 1</div>
-            <div class="notify_head_right_item">10/04/2020</div>
-          </div>
-          <div class="notify_mid_item">
-            <div class="notify_mid_head_item">Tên thao tác lỗi</div>
-              <div class="content">
-                Thiết bị ... tại ...
-              </div>
-              <div class="content">
-                Thiết bị ... tại ...
-              </div>
-          </div>
-          <div class="notify_bot_item"><span class="material-icons">
-            keyboard_double_arrow_right
-          </span></div>
-        </div>
-
-        <div class="notify_item">
-          <div class="notify_head_item">
-            <div class="notify_head_left_item">Nhà 1</div>
-            <div class="notify_head_right_item">10/04/2020</div>
-          </div>
-          <div class="notify_mid_item">
-            <div class="notify_mid_head_item">Tên thao tác lỗi</div>
-              <div class="content">
-                Thiết bị ... tại ...
-              </div>
-              <div class="content">
-                Thiết bị ... tại ...
-              </div>
-          </div>
-          <div class="notify_bot_item"><span class="material-icons">
-            keyboard_double_arrow_right
-          </span></div>
-        </div>
-
-      </div>
-			
-			<button
-				type="button"
-				class="btn"
-				@click="showModal"
-			>
-				Open Modal!
-			</button>
 
 
 
@@ -171,11 +132,11 @@ export default {
     margin: 15px 20px;
     border-bottom: 2px solid black;
 }
-.list{
+.content{
     margin: 0 20px;
     overflow: scroll;
-    min-height: 700px;
-    max-height: 700px;
+    min-height: 690px;
+    max-height: 690px;
 }
 .notify_item{
     margin-top: 15px;
@@ -207,10 +168,6 @@ export default {
     font-size: 24px;
     font-weight: bold;
 }
-.content{
-    margin: 5px 10px;
-    max-width: 100%;
-}
 .notify_bot_item{
     display: flex;
     justify-content: flex-end;
@@ -238,5 +195,22 @@ export default {
 }
 .nav_item.active *{
     color: aqua;
+}
+.functionList{
+  display: flex;
+  flex-wrap: wrap;
+}
+.functionBox{
+  flex: 0 0 47%;
+  text-align: center;
+  margin: 0 5px 10px 5px;
+  border: 2px solid black;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.functionHeader{
+  font-weight: bold;
+  margin: 0 0 10px 0;
 }
 </style>
