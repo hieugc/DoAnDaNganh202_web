@@ -9,10 +9,11 @@ class house extends Controller{
         else{
             //lấy danh sách phòng
             //phòng mặc định
+            /*
             $_SESSION["room"] = $this->cus_array($this->model("user")->get_room($_SESSION["house_active"]["id"]));//lay full phong
             if(count($_SESSION["room"]) != 0){
                 $_SESSION["room_active"] = $_SESSION["room"][0];
-            }
+            }*/
             //lấy danh sách method ở nhà chưa làm
             $this->view("house");
         }

@@ -155,5 +155,14 @@
                         WHERE `fan`.`ID` = " . $id . ";" ;
             return mysqli_query($this->connect, $query);
         }
+        public function add_notify($content, $value, $time){
+            $query =    "INSERT INTO `notify` (`notify`.`CONTENT`, `notify`.`VALUE`) VALUE(\"$content\", $value);";
+            return mysqli_query($this->connect, $query);
+        }
+        public function get_notify(){
+            $query =    "SELECT `notify`.`CONTENT` AS `content`, `notify`.`VALUE` AS `value`, `notify`.`TIME` AS `time`
+                        FROM `notify`";
+            return mysqli_query($this->connect, $query);
+        }
     }
 ?>

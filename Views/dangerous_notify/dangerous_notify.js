@@ -1,9 +1,16 @@
-var nav = document.querySelectorAll(".nav_item");
-var nav_active = document.querySelectorAll(".active")[0];
-nav.forEach(element => {
-    element.addEventListener("click", function(){
-        element.classList.add("active");
-        nav_active.classList.remove("active");
-        nav_active = element;
-    })
-});
+function safe(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            if(this.responseText.indexOf("error") == -1 || this.responseText.indexOf("not found") == -1){
+                window.location.href = "?url=house/house_view";
+            }
+            else{
+                console.log(this.responseText);
+            }
+        };
+    }
+    xmlhttp.open("GET", "?url=dangerous_notify/safe/", true);
+    xmlhttp.send();
+}

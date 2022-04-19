@@ -21,6 +21,7 @@ class login extends Controller{
                 $_SESSION["room"] = $this->cus_array($this->model("user")->get_room($_SESSION["house_active"]["id"]));//lay full phong
                 if(count($_SESSION["room"]) != 0){
                     $_SESSION["room_active"] = $_SESSION["room"][0];
+                    $_SESSION["notify"] = $this->cus_array($this->model('user')->get_notify());
                 }
             }
             echo "?url=house/house_view/";

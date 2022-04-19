@@ -7,7 +7,7 @@
     <title>Assignment</title>
     <!--icon link-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="./Views/dangerous/style.css" rel="stylesheet" type="text/css" />
+    <link href="./Views/dangerous_notify/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="cointain">
@@ -18,8 +18,8 @@
       <h1>Gas bị rò rỉ</h1>
       <h2><?php if(isset($_SESSION["room_active"])) echo $_SESSION["room_active"]["name"];?></h2>
       <h2><?php if(isset($_SESSION["house_active"])) echo $_SESSION["house_active"]["name"];?></h2>
-      <div class="btn"><p><a href="?url=house/house_view">Bỏ qua</a></p></div>
+      <div class="btn"><p onclick="safe()">Bỏ qua</p></div>
     </div>
-    <script src="./Views/dangerous/notify.js"></script>
+    <script src="./Views/dangerous_notify/dangerous_notify.js"></script>
   </body>
 </html>

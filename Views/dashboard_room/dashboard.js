@@ -40,7 +40,7 @@ function draw_gas(){
           console.log(this.responseText);
           let demo = JSON.parse(this.responseText);
           var arr = demo.split("},{");
-          var data_gas = [];
+          //var data_gas = [];
           for(var i = arr.length - 1; i >= 0 ; i--){
             data_gas.push([get_date(arr[i]), get_value(arr[i])]);
           }
@@ -59,7 +59,7 @@ function draw_temp(){
         if(this.responseText != "null"){
           let demo = JSON.parse(this.responseText);
           var arr = demo.split("},{");
-          var data_temp = [];
+          //var data_temp = [];
           for(var i = arr.length - 1; i >= 0 ; i--){
             data_temp.push([get_date(arr[i]), get_value(arr[i])]);
           }
@@ -85,8 +85,16 @@ function auto_draw_gas(){
         {
           let demo = JSON.parse(this.responseText);
           console.log(demo);
-          data_gas.push([get_date(demo), get_value(demo)]);
-          Draw(data_gas, "Nồng độ khí gas", "chart_div_2", "Nồng độ", "#147AD6");
+          var datag = get_value(demo);
+          if(datag >= 400){
+            clearInterval(timer_gas);
+            clearInterval(timer_temp);
+            window.location.href = "?url=dangerous_notify/dangerous_notify_view/"+datag;
+          }
+          else{
+            data_gas.push([get_date(demo), datag]);
+            Draw(data_gas, "Nồng độ khí gas", "chart_div_2", "Nồng độ", "#147AD6");
+          }
         }
       }
     };
@@ -107,11 +115,11 @@ function auto_draw_temp(){
     xmlhttp.open("GET", "?url=dash_board/get_temperature", true);
     xmlhttp.send();
 }
-//var data_gas = [];
-//var data_temp = [];
+var data_gas = [];
+var data_temp = [];
 var timer_gas;
 var timer_temp;
 draw_gas();
 draw_temp();
-timer_temp = setInterval(draw_gas, 5000);
-timer_gas = setInterval(draw_temp, 5000);
+timer_temp = setInterval(auto_draw_gas, 5000);
+timer_gas = setInterval(auto_draw_temp, 5000);
