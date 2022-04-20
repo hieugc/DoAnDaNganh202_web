@@ -19,11 +19,11 @@
             foreach($_SESSION["notify"] as $row){
               echo "<div class=\"notify_item\">
               <div class=\"notify_head_item\">
-                <div class=\"notify_head_left_item\">" . explode(" ",$row["content"])[0] . "</div>
-                <div class=\"notify_head_right_item\">" . $row["time"] . "</div>
+                <div class=\"notify_head_left_item\">" . explode("@",$row["content"])[0] . "</div>
+                <div class=\"notify_head_right_item\">" . explode("-",$row["time"])[2] . "-" . explode("-",$row["time"])[1] . "-" . explode("-",$row["time"])[0] . "</div>
               </div>
               <div class=\"notify_mid_item\">
-                <div class=\"notify_mid_head_item\">Rò rỉ khí gas tại " . explode(" ",$row["content"])[1] . "</div>
+                <div class=\"notify_mid_head_item\">Rò rỉ khí gas tại " . explode("@",$row["content"])[1] . "</div>
                 <div class=\"content\">
                   Rò rỉ " . $row["value"]/100 . "%
                 </div>

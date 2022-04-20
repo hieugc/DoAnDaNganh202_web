@@ -1,7 +1,10 @@
 .contain{
+  margin: auto;
   margin-top: 70px;
     display: flex;
     justify-content: center;
+  max-width: 400px;
+  box-shadow: 0 4px 8px 0 rgba(210, 127, 10, 0.2), 0 6px 20px 0 rgba(189, 115, 11, 0.19);
     flex-flow: column;
 }
   

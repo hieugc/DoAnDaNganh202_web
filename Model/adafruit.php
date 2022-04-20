@@ -1,7 +1,7 @@
 <?php
     class adafruit{
         protected $ADAFRUIT_IO_USERNAME = "Hieupham2502";
-        protected $ADAFRUIT_IO_KEY = "aio_aaRS41FD0tW3XtgLFaT82oCWhURv";
+        protected $ADAFRUIT_IO_KEY = "aio_CRGN15K7y7dkWcj0shcjKmVvpEDU";
         private function cus_curl($data, $type, $method){
             $curl = curl_init();
             //var_dump(json_encode($data));

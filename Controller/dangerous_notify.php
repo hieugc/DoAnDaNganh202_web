@@ -7,9 +7,10 @@ class dangerous_notify extends Controller{
             $this->view("login");
         }
         else{
-            $time = date("d-m-Y");
-            $content = $_SESSION["house_active"]["name"] . " " . $_SESSION["room_active"]["name"];
+            $time = date("Y-m-d");
+            $content = $_SESSION["house_active"]["name"] . "@" . $_SESSION["room_active"]["name"];
             $model_name = $this->model('user')->add_notify($content, $value, $time);
+            $_SESSION["notify"] = $this->cus_array($this->model('user')->get_notify());
             $this->view("dangerous_notify");
         }
     }

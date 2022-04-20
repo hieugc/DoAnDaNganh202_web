@@ -156,7 +156,7 @@
             return mysqli_query($this->connect, $query);
         }
         public function add_notify($content, $value, $time){
-            $query =    "INSERT INTO `notify` (`notify`.`CONTENT`, `notify`.`VALUE`) VALUE(\"$content\", $value);";
+            $query =    "INSERT INTO `notify` (`notify`.`CONTENT`, `notify`.`VALUE`, `notify`.`TIME`) VALUE(\"$content\", $value, \"$time\");";
             return mysqli_query($this->connect, $query);
         }
         public function get_notify(){

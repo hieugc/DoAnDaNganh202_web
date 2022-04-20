@@ -1,9 +1,14 @@
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+.containner{
+    max-width: 400px;
+    box-shadow: 0 4px 8px 0 rgba(210, 127, 10, 0.2), 0 6px 20px 0 rgba(189, 115, 11, 0.19);
+}
 .head{
     padding: 10px 16px;
     margin: 5px 20px;
@@ -19,7 +24,7 @@
 .notify_item{
     margin-top: 15px;
     padding: 10px;
-    border: 2px solid black;
+    border: 2px solid rgb(175, 58, 58);
     border-radius: 20px;
 }
 .notify_head_item{

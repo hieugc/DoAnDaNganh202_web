@@ -64,3 +64,6 @@ VALUES ("Đèn 1", 0, 1),
 INSERT INTO `fan`(`fan`.`NAME`, `fan`.`VALUE`, `fan`.`ROOM_ID`) 
 VALUES ("Quạt đứng", 0, 1),
 ("Quạt trần", 0, 1);
+
+INSERT INTO `notify`(`notify`.`CONTENT`, `notify`.`VALUE`, `notify`.`TIME`) VALUES
+("Nhà 1@phòng 1", 800, "2022-04-18");
