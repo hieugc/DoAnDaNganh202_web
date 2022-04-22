@@ -15,8 +15,8 @@
         <div class="head">
           <div class="head_left">
           <span class="material-icons">
-room_preferences
-</span>
+            room_preferences
+          </span>
                 <h1><?php if(isset($_SESSION["room_active"])) echo $_SESSION["room_active"]["name"] ?></h1>
           </div>
           <div class="head_right">
@@ -83,15 +83,14 @@ room_preferences
         <div class="nav" id="1">
         <?php require_once "./Views/nav/index.php"; ?>
         </div>
-    </div>
-    <div id="myModal_house" class="modal">
+        <div id="myModal_house" class="modal">
 
       <!-- Modal content -->
       <div class="modal-head-house">
         <div class="head_left">
         <span class="material-icons">
-room_preferences
-</span>
+        room_preferences
+        </span>
               <h1 class="namehouse"><?php if(isset($_SESSION["room_active"])) echo $_SESSION["room_active"]["name"] ?></h1>
         </div>
       </div>
@@ -138,6 +137,7 @@ room_preferences
           <h1>Tên phòng</h1>  
           <input type="text" placeholder="" name="search">
           <h1 style="margin-top: 60px;">Hình nền phòng</h1>
+          <input class="QR" type="text" placeholder="......" name="QR" style="display:none;">
           <div class="image-edit">
               <h3 style="padding-bottom: 10px;border-bottom: 1px solid #EA8C00;"><label for="image" style="display: flex;justify-content: space-between;">Chọn ảnh<span class="material-icons">
                 arrow_forward_ios
@@ -148,6 +148,8 @@ room_preferences
         </div>
       </div>
     </div>
+    </div>
+    
     <script src="./Views/room/room.js"></script>
 </body>
 </html>

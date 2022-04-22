@@ -79,16 +79,16 @@ class room extends Controller{
     public function create_method(){
     }
     //tạo thao tác
-    public function create_led($name){
+    public function create_led($name, $id){
         //tạo led
         //tạo feed
         //tạo block
-        $model_name = $this->model('user')->create_led($name, $_SESSION["room_active"]["id"]);
+        $model_name = $this->model('user')->create_led($id, $name, $_SESSION["room_active"]["id"]);
         if($model_name){
             $_SESSION["room_led"] = $this->cus_array($this->model('user')->get_led($_SESSION["room_active"]["id"]));
-            echo end($_SESSION["room_led"])["id"];
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"])["id"]);
-            $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"])["id"]);
+            //echo end($_SESSION["room_led"])["id"];
+            //$this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"])["id"]);
+            //$this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'led-' . end($_SESSION["room_led"])["id"]);
             echo "ok";
         }
         else{
@@ -102,8 +102,8 @@ class room extends Controller{
         $model_name = $this->model('user')->create_fan($name, $_SESSION["room_active"]["id"]);
         if($model_name){
             $_SESSION["room_fan"] = $this->cus_array($this->model('user')->get_fan($_SESSION["room_active"]["id"]));
-            $this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));
-            $this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));
+            //$this->model('adafruit')->create_feed($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));
+            //$this->model('adafruit')->create_block($_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . $_SESSION["room_active"]["id"], 'fan-' . end($_SESSION["room_fan"]["id"]));
             echo "ok";
         }
         else{

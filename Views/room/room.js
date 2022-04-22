@@ -12,29 +12,57 @@ var deletev = document.getElementById("delete");
 var content_settinghouse = document.getElementsByClassName("content-settinghouse")[0];
 
 var head_right = document.getElementsByClassName("head_right")[0];
+var image_edit = document.getElementsByClassName("image-edit")[0];
+var QR = document.getElementsByClassName("QR")[0];
 left.onclick = function(){
   myModal_house.style.display = "none";
   myModal_settinghouse.style.display = "none";
 }
 right.onclick = function(){
-  myModal_house.style.display = "none";
-  myModal_settinghouse.style.display = "none";
+  var input1 = myModal_settinghouse.getElementsByTagName("input")[0].value;
+  var input2 = myModal_settinghouse.getElementsByTagName("input")[1].value;
+  var id = input2.split("-").reverse()[0];
+  var device = "";
+  if(input2.indexOf("led") == -1) device = "fan";
+  else device = "led";
+  console.log(input1 + " " + input2 + " " + id + " " + device);
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(this.responseText.indexOf("ok") != -1)
+      {
+        var text = "<div class=\"item\"><h3>" + input1 + "</h3><label class=\"switch\"><div hidden>" + device + "-" + id + "</div><input type=\"checkbox\" onclick=\"update_device(this)\"><span class=\"slider round\"></span></label></div>";
+        document.getElementsByClassName("list")[0].innerHTML = text + document.getElementsByClassName("list")[0].innerHTML;
+        myModal_house.style.display = "none";
+        myModal_settinghouse.style.display = "none";
+      }
+      else{
+        console.log(this.responseText);
+      }
+    }
+  };
+  xmlhttp.open("GET", "?url=room/create_" + device + "/" + input1 + "/" + id, true);
+  xmlhttp.send();
 }
 Lbot_item[Lbot_item.length - 3].onclick = function(){
     myModal_house.style.display = "none";
     myModal_settinghouse.style.display = "block";
     left.getElementsByTagName("h1")[0].innerText = namehouse;
     deletev.style.display = "flex";
-    content_settinghouse.getElementsByTagName("h1")[0].innerText = "Tên nhà";
-    content_settinghouse.getElementsByTagName("h1")[1].innerText = "Hình nền nhà";
+    image_edit.style.display = "block";
+    QR.style.display = "none";
+    content_settinghouse.getElementsByTagName("h1")[0].innerText = "Tên phòng";
+    content_settinghouse.getElementsByTagName("h1")[1].innerText = "Hình nền phòng";
 }
 Lbot_item[Lbot_item.length - 2].onclick = function(){
     myModal_house.style.display = "none";
     myModal_settinghouse.style.display = "block";
-    left.getElementsByTagName("h1")[0].innerText = "Tất cả nhà";
+    left.getElementsByTagName("h1")[0].innerText = "Tất cả phòng";
     deletev.style.display = "none";
-    content_settinghouse.getElementsByTagName("h1")[0].innerText = "Tên nhà";
-    content_settinghouse.getElementsByTagName("h1")[1].innerText = "Hình nền nhà";
+    image_edit.style.display = "block";
+    QR.style.display = "none";
+    content_settinghouse.getElementsByTagName("h1")[0].innerText = "Tên phòng";
+    content_settinghouse.getElementsByTagName("h1")[1].innerText = "Hình nền phòng";
 }
 
 head_left.onclick = function() {
@@ -42,10 +70,12 @@ head_left.onclick = function() {
 }
 head_right.onclick = function(){
   myModal_settinghouse.style.display = "block";
-  left.getElementsByTagName("h1")[0].innerText = "Tất cả phòng";
+  left.getElementsByTagName("h1")[0].innerText = "Tất cả thiết bị";
   deletev.style.display = "none";
-  content_settinghouse.getElementsByTagName("h1")[0].innerText = "Tên phòng";
-  content_settinghouse.getElementsByTagName("h1")[1].innerText = "Hình nền phòng";
+  image_edit.style.display = "none";
+  QR.style.display = "block";
+  content_settinghouse.getElementsByTagName("h1")[0].innerText = "Tên tên thiết bị";
+  content_settinghouse.getElementsByTagName("h1")[1].innerText = "Mã thiết bị";
 }
 
 window.onclick = function(event) {
@@ -70,7 +100,7 @@ function update_gas(){
         {
           console.log(this.responseText);
           let demo = JSON.parse(this.responseText);
-          document.getElementById("gas").innerText = String(get_value(demo)) + " %";
+          document.getElementById("gas").innerText = String(get_value(demo)/100) + " %";
         }
       }
     };

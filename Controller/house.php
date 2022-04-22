@@ -29,6 +29,7 @@ class house extends Controller{
             {
                 $_SESSION["house_active"] = $_SESSION["house"][0];
             }
+            echo "ok";
         }
         else{
             var_dump($model_name);
@@ -91,7 +92,7 @@ class house extends Controller{
             if(count($_SESSION["room"]) == 1){//3
                 $_SESSION["room_active"] = $_SESSION["room"][0];
             }
-            $this->model('adafruit')->create_dashboard( $_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . end($_SESSION["room"])["id"]);//4
+            //$this->model('adafruit')->create_dashboard( $_SESSION["user_name"], 'house-' . $_SESSION["house_active"]["id"], 'room-' . end($_SESSION["room"])["id"]);//4
             echo "ok";//5
         }
         else{

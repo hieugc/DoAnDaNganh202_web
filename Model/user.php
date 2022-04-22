@@ -115,8 +115,8 @@
                         WHERE `led`.`ROOM_ID` = $room_id;";
             return mysqli_query($this->connect, $query);
         }
-        public function create_led($name, $room_id){
-            $query =    "INSERT INTO `led` (`led`.`NAME`, `led`.`VALUE`, `led`.`ROOM_ID`) VALUE(\"$name\", 1, $room_id);";
+        public function create_led($id, $name, $room_id){
+            $query =    "INSERT INTO `led` (`led`.`ID`, `led`.`NAME`, `led`.`VALUE`, `led`.`ROOM_ID`) VALUE($id, \"$name\", 0, $room_id);";
             return mysqli_query($this->connect, $query);
         }
         public function update_led($name, $value, $id){

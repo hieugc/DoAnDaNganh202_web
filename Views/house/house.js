@@ -17,8 +17,41 @@ left.onclick = function(){
   myModal_settinghouse.style.display = "none";
 }
 right.onclick = function(){
-  myModal_house.style.display = "none";
-  myModal_settinghouse.style.display = "none";
+  var input = document.getElementsByTagName("input")[0].value;
+  var func = "";
+  if(left.getElementsByTagName("h1")[0].innerText == namehouse) func = "update_house";
+  else if(left.getElementsByTagName("h1")[0].innerText == "Tất cả nhà") func = "create_house";
+  else if(left.getElementsByTagName("h1")[0].innerText == "Tất cả phòng") func = "create_room";
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(this.responseText.indexOf("ok") != -1)
+      {
+        if(func == "update_house"){
+          myModal_settinghouse.getElementsByTagName("h1")[0].innerText = input;
+          myModal_house.getElementsByTagName("h1")[0].innerText = input;
+          head_left.getElementsByTagName("h1")[0].innerText = input;
+          document.getElementsByClassName("bot-item")[0].getElementsByTagName("h3")[0].innerText = input;
+          namehouse = input;
+        }
+        else if(func == "create_house"){
+          var text = "<div class=\"bot-item\"><h3>" + input + "</h3></div>";
+          document.getElementsByClassName("modal-content-house")[0].innerHTML = text + document.getElementsByClassName("modal-content-house")[0].innerHTML;
+        }
+        else if(func == "create_room"){
+          var text = "<div class=\"item\"><a href=\"?url=room/room_view\"><h1>" + input + "</h1></a></div>";
+          document.getElementsByClassName("list")[0].innerHTML = text + document.getElementsByClassName("list")[0].innerHTML;
+        }
+        myModal_house.style.display = "none";
+        myModal_settinghouse.style.display = "none";
+      }
+      else{
+        console.log(this.responseText);
+      }
+    }
+  };
+  xmlhttp.open("GET", "?url=house/" + func + "/" + input + "/default", true);
+  xmlhttp.send();
 }
 Lbot_item[Lbot_item.length - 3].onclick = function(){
     myModal_house.style.display = "none";
