@@ -1,5 +1,5 @@
-# DoAnDaNganh202_web
-Đồ án đa ngành 202
+# DoAnDaNganh212_web
+Đồ án đa ngành 212
 1. Dùng xampp mở Apache + SQL
 2. Truy cập http:localhost/phpmyadmin -> import file trong Database/DoAn202.sql
 3. Đảm bảo mysql của bạn có user là root không có password
