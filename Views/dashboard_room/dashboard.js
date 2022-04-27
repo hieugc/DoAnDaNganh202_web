@@ -45,7 +45,7 @@ function draw_gas(){
             data_gas.push([get_date(arr[i]), get_value(arr[i])/100]);
           }
           Draw(data_gas, "Nồng độ khí gas", "chart_div_2", "Nồng độ", "#147AD6");
-          timer_gas = setInterval(auto_draw_gas, 5000);
+          //timer_gas = setInterval(draw_gas, 5000);
         }
       }
     };
@@ -64,7 +64,7 @@ function draw_temp(){
             data_temp.push([get_date(arr[i]), get_value(arr[i])]);
           }
           Draw(data_temp, "Nhiệt độ phòng", "chart_div_3", "Nhiệt độ", "#FF4646");
-          timer_temp = setInterval(auto_draw_temp, 5000);
+          //timer_temp = setInterval(draw_temp, 5000);
         }
       }
     };
